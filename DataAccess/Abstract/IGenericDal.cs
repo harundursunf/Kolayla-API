@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace DataAccess.Abstract
 {
@@ -13,6 +11,7 @@ namespace DataAccess.Abstract
         void Delete(T entity);
         T GetById(int id);
         List<T> GetAll();
-        List<T> GetAll(Func<T, bool> predicate);
+        List<T> GetAll(Expression<Func<T, bool>> filter);
+        T GetByFilter(Expression<Func<T, bool>> filter);
     }
 }

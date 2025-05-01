@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Entities
+namespace Core.Dto
 {
-    public class Topic
+    public class UserDto
     {
-
         public int Id { get; set; }
+
         public string Name { get; set; }
-        public string LessonType { get; set; } 
-        public string Category { get; set; } 
+
+        public string Email { get; set; }
+
+       
     }
 }

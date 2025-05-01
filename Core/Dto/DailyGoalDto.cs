@@ -1,21 +1,17 @@
-﻿using System;
+﻿using Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Entities
+namespace Core.Dto
 {
-    public class DailyGoal
+    public class DailyGoalDto
     {
-
-
         public int Id { get; set; }
         public int UserId { get; set; }
         public string Text { get; set; }
         public DateTime CreatedDate { get; set; }
-        public User User { get; set; }
-
-        // buraya topic ile ilişki ekle hangi desrten hang. hedef 
     }
 }
