@@ -1,4 +1,5 @@
 ﻿using DataAccess.Abstract;
+using DataAccess.Context;
 using DataAccess.Repositories;
 using Entities.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,7 @@ namespace DataAccess.Ef
     public class EfFactDal : GenericRepository<Fact>, IFactDal
 
     {
-        public EfFactDal(DbContext context) : base(context)
+        public EfFactDal(StudyFlowApiDbContext context) : base(context)
         {
         }
     }

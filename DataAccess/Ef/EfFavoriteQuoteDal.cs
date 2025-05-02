@@ -1,4 +1,5 @@
 ﻿using DataAccess.Abstract;
+using DataAccess.Context;
 using DataAccess.Repositories;
 using Entities.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,7 @@ namespace DataAccess.Ef
 {
     public class EfFavoriteQuoteDal : GenericRepository<FavoriteQuote>, IFavoriteQuoteDal
     {
-        public EfFavoriteQuoteDal(DbContext context) : base(context)
+        public EfFavoriteQuoteDal(StudyFlowApiDbContext context) : base(context)
         {
         }
     }

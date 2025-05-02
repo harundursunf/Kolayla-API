@@ -1,4 +1,5 @@
 ﻿using DataAccess.Abstract;
+using DataAccess.Context;
 using DataAccess.Repositories;
 using Entities.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,7 @@ namespace DataAccess.Ef
 {
     public class EfNoteDal : GenericRepository<Note>, INoteDal
     {
-        public EfNoteDal(DbContext context) : base(context)
+        public EfNoteDal(StudyFlowApiDbContext context) : base(context)
         {
         }
     }

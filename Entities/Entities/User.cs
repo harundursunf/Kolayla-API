@@ -14,7 +14,8 @@ namespace Entities.Entities
 
         public string Email { get; set; }
 
-        public string passwordHash { get; set; }
+        public byte[]? PasswordHash { get; set; }
+        public byte[]? PasswordSalt { get; set; }
 
         public ICollection<FavoriteQuote> FavoriteQuotes { get; set; }
         public ICollection<FavoriteFact> FavoriteFacts { get; set; }

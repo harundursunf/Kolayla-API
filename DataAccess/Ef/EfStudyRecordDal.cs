@@ -1,4 +1,5 @@
 ﻿using DataAccess.Abstract;
+using DataAccess.Context;
 using DataAccess.Repositories;
 using Entities.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,7 @@ namespace DataAccess.Ef
 {
     public class EfStudyRecordDal : GenericRepository<StudyRecord>, IStudyRecordDal
     {
-        public EfStudyRecordDal(DbContext context) : base(context)
+        public EfStudyRecordDal(StudyFlowApiDbContext context) : base(context)
         {
         }
     }
