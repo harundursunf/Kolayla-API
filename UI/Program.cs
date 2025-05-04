@@ -7,14 +7,25 @@ using DataAccess.Context;
 using DataAccess.Ef;
 using Microsoft.EntityFrameworkCore;
 using Core.Utilities.Security.JWT;
-
 using Microsoft.OpenApi.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // DbContext
 builder.Services.AddDbContext<StudyFlowApiDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("StudyFlow")));
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+    
 
 // Dependency Injection
 builder.Services.AddScoped<ICompletedTopicService, CompletedTopicManager>();
@@ -38,11 +49,7 @@ builder.Services.AddScoped<INetEntryDal, EfNetEntryDal>();
 builder.Services.AddScoped<IStudyRecordService, StudyRecordManager>();
 builder.Services.AddScoped<IStudyRecordDal, EfStudyRecordDal>();
 builder.Services.AddScoped<IQuoteService, QuoteManager>();
-builder.Services.AddScoped<IQuoteDal, EfQuoteDal>();  
-
-
-
-
+builder.Services.AddScoped<IQuoteDal, EfQuoteDal>();
 
 // Controllers
 builder.Services.AddControllers();
@@ -68,6 +75,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// CORS middleware
+app.UseCors("AllowAll");
+
 app.UseAuthorization();
+
 app.MapControllers();
+
 app.Run();

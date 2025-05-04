@@ -1,6 +1,9 @@
-﻿using Businness.Abstract;
+﻿using Business.Abstract;
+using Businness.Abstract;
 using Core.Dto;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 
 namespace UI.Controllers
 {
@@ -21,6 +24,14 @@ namespace UI.Controllers
             if (dto == null)
                 return BadRequest("Tamamlanmış konu bilgisi boş olamaz.");
 
+            // Aynı userId ve topicId için bir kayıt var mı kontrol et
+            var existingTopic = _completedTopicService.GetByUserIdAndTopicId(dto.UserId, dto.TopicId);
+            if (existingTopic != null)
+            {
+                return BadRequest("Bu konu zaten tamamlanmış.");
+            }
+
+            dto.CompletedDate = DateTime.UtcNow;  // Tamamlanma tarihi ayarla
             _completedTopicService.Add(dto);
             return Ok("Tamamlanmış konu eklendi.");
         }
@@ -31,6 +42,12 @@ namespace UI.Controllers
             if (dto == null)
                 return BadRequest("Güncelleme verisi geçersiz.");
 
+            var existingTopic = _completedTopicService.GetById(dto.Id);
+            if (existingTopic == null)
+            {
+                return NotFound("Konu bulunamadı.");
+            }
+
             _completedTopicService.Update(dto);
             return Ok("Tamamlanmış konu güncellendi.");
         }
@@ -38,25 +55,14 @@ namespace UI.Controllers
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(int id)
         {
+            var existingTopic = _completedTopicService.GetById(id);
+            if (existingTopic == null)
+            {
+                return NotFound("Konu bulunamadı.");
+            }
+
             _completedTopicService.Delete(id);
             return Ok("Tamamlanmış konu silindi.");
-        }
-
-        [HttpGet("get/{id}")]
-        public IActionResult GetById(int id)
-        {
-            var result = _completedTopicService.GetById(id);
-            if (result == null)
-                return NotFound("Konu bulunamadı.");
-
-            return Ok(result);
-        }
-
-        [HttpGet("getall")]
-        public IActionResult GetAll()
-        {
-            var result = _completedTopicService.GetAll();
-            return Ok(result);
         }
 
         [HttpGet("getbyuser/{userId}")]

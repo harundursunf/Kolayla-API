@@ -16,6 +16,6 @@ namespace Entities.Entities
         public DateTime CreatedDate { get; set; }
         public User User { get; set; }
 
-        // buraya topic ile ilişki ekle hangi desrten hang. hedef 
+        
     }
 }
