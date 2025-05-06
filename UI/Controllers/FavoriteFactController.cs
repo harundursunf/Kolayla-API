@@ -30,9 +30,16 @@ namespace UI.Controllers
             return Ok("Favori bilgi güncellendi.");
         }
 
-        [HttpDelete]
-        public IActionResult Delete([FromBody] FavoriteFactDto dto)
+        // GÜNCELLENEN SİLME METODU
+        [HttpDelete("{userId}/{factId}")]
+        public IActionResult Delete(int userId, int factId)
         {
+            var dto = new FavoriteFactDto
+            {
+                UserId = userId,
+                FactId = factId
+            };
+
             _favoriteFactService.Delete(dto);
             return Ok("Favori bilgi silindi.");
         }

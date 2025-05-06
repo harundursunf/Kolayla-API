@@ -19,6 +19,9 @@ namespace UI.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] StudyRecordDto dto)
         {
+            if (dto == null)
+                return BadRequest("Çalışma kaydı boş olamaz.");
+
             _studyRecordService.Add(dto);
             return Ok("Çalışma kaydı başarıyla eklendi.");
         }
@@ -41,9 +44,7 @@ namespace UI.Controllers
         public IActionResult GetById(int id)
         {
             var result = _studyRecordService.GetById(id);
-            if (result == null)
-                return NotFound("Çalışma kaydı bulunamadı.");
-            return Ok(result);
+            return result == null ? NotFound("Çalışma kaydı bulunamadı.") : Ok(result);
         }
 
         [HttpGet]

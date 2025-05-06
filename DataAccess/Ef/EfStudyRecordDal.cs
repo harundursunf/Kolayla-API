@@ -1,6 +1,5 @@
 ﻿using DataAccess.Abstract;
 using DataAccess.Context;
-using DataAccess.Repositories;
 using Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;

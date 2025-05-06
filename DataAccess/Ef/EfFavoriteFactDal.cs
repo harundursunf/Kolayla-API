@@ -1,6 +1,5 @@
 ﻿using DataAccess.Abstract;
 using DataAccess.Context;
-using DataAccess.Repositories;
 using Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,6 +15,11 @@ namespace DataAccess.Ef
         public EfFavoriteFactDal(StudyFlowApiDbContext context) : base(context)
         {
         }
+
+        public FavoriteFact GetByUserAndFact(int userId, int factId)
+        {
+            return _context.Set<FavoriteFact>()
+                .FirstOrDefault(f => f.UserId == userId && f.FactId == factId);
+        }
     }
 }
-

@@ -17,53 +17,48 @@ namespace UI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add([FromBody] DailyGoalDto dailyGoalDto)
+        public IActionResult Add([FromBody] DailyGoalDto dto)
         {
-            if (dailyGoalDto == null)
-            {
-                return BadRequest("Daily goal cannot be null");
-            }
+            if (dto == null)
+                return BadRequest("Günlük hedef boş olamaz.");
 
-            _dailyGoalService.Add(dailyGoalDto);
-            return Ok("Daily goal added successfully");
+            _dailyGoalService.Add(dto);
+            return Ok("Günlük hedef başarıyla eklendi.");
         }
 
         [HttpPut("update")]
-        public IActionResult Update([FromBody] DailyGoalDto dailyGoalDto)
+        public IActionResult Update([FromBody] DailyGoalDto dto)
         {
-            _dailyGoalService.Update(dailyGoalDto);
-            return Ok("Daily goal updated successfully");
+            _dailyGoalService.Update(dto);
+            return Ok("Günlük hedef başarıyla güncellendi.");
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             _dailyGoalService.Delete(id);
-            return Ok("Daily goal deleted successfully");
+            return Ok("Günlük hedef başarıyla silindi.");
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var goals = _dailyGoalService.GetAll();
-            return Ok(goals);
+            var result = _dailyGoalService.GetAll();
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var goal = _dailyGoalService.GetById(id);
-            if (goal == null)
-                return NotFound();
-
-            return Ok(goal);
+            var result = _dailyGoalService.GetById(id);
+            return result == null ? NotFound("Günlük hedef bulunamadı.") : Ok(result);
         }
 
         [HttpGet("user/{userId}")]
         public IActionResult GetByUserId(int userId)
         {
-            var goals = _dailyGoalService.GetByUserId(userId);
-            return Ok(goals);
+            var result = _dailyGoalService.GetByUserId(userId);
+            return Ok(result);
         }
     }
 }

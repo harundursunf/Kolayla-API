@@ -1,13 +1,12 @@
-﻿using Businness.Abstract;
+﻿using Business.Abstract;
+using Businness.Abstract;
 using Core.Dto;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace UI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize] // Kullanıcı giriş yapmış olmalı
     public class NoteController : ControllerBase
     {
         private readonly INoteService _noteService;
@@ -35,31 +34,31 @@ namespace UI.Controllers
         public IActionResult GetById(int id)
         {
             var result = _noteService.GetById(id);
-            if (result == null)
-                return NotFound();
-
-            return Ok(result);
+            return result == null ? NotFound("Not bulunamadı.") : Ok(result);
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public IActionResult Add([FromBody] NoteDto dto)
         {
+            if (dto == null)
+                return BadRequest("Not bilgisi boş olamaz.");
+
             _noteService.Add(dto);
-            return Ok(new { message = "Not başarıyla eklendi." });
+            return Ok("Not başarıyla eklendi.");
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         public IActionResult Update([FromBody] NoteDto dto)
         {
             _noteService.Update(dto);
-            return Ok(new { message = "Not başarıyla güncellendi." });
+            return Ok("Not başarıyla güncellendi.");
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             _noteService.Delete(id);
-            return Ok(new { message = "Not başarıyla silindi." });
+            return Ok("Not başarıyla silindi.");
         }
     }
 }
