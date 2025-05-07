@@ -30,7 +30,7 @@ namespace UI.Controllers
             return Ok("Favori bilgi güncellendi.");
         }
 
-        // GÜNCELLENEN SİLME METODU
+        
         [HttpDelete("{userId}/{factId}")]
         public IActionResult Delete(int userId, int factId)
         {

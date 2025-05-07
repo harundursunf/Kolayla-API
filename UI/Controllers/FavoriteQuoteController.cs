@@ -29,14 +29,19 @@ namespace UI.Controllers
             return Ok("Favori alıntı güncellendi.");
         }
 
-        [HttpDelete]
-        public IActionResult Delete([FromBody] FavoriteQuoteDto dto)
+        [HttpDelete("{userId:int}/{quoteId:int}")]
+        public IActionResult Delete(int userId, int quoteId)
         {
+            var dto = new FavoriteQuoteDto
+            {
+                UserId = userId,
+                QuoteId = quoteId
+            };
             _favoriteQuoteService.Delete(dto);
             return Ok("Favori alıntı silindi.");
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
         {
             var result = _favoriteQuoteService.GetById(id);
@@ -52,7 +57,7 @@ namespace UI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("user/{userId}")]
+        [HttpGet("user/{userId:int}")]
         public IActionResult GetByUserId(int userId)
         {
             var result = _favoriteQuoteService.GetByUserId(userId);
