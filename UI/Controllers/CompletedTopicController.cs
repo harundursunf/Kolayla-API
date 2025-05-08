@@ -2,10 +2,8 @@
 using Businness.Abstract;
 using Core.Dto;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
 
-namespace UI.Controllers
+namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -22,53 +20,62 @@ namespace UI.Controllers
         public IActionResult Add([FromBody] CompletedTopicDto dto)
         {
             if (dto == null)
-                return BadRequest("Tamamlanmış konu bilgisi boş olamaz.");
+                return BadRequest("Geçersiz veri.");
 
-            // Aynı userId ve topicId için bir kayıt var mı kontrol et
-            var existingTopic = _completedTopicService.GetByUserIdAndTopicId(dto.UserId, dto.TopicId);
-            if (existingTopic != null)
-            {
-                return BadRequest("Bu konu zaten tamamlanmış.");
-            }
-
-            dto.CompletedDate = DateTime.UtcNow;  // Tamamlanma tarihi ayarla
             _completedTopicService.Add(dto);
-            return Ok("Tamamlanmış konu eklendi.");
+            return Ok("Tamamlanan konu eklendi.");
         }
 
         [HttpPut("update")]
         public IActionResult Update([FromBody] CompletedTopicDto dto)
         {
             if (dto == null)
-                return BadRequest("Güncelleme verisi geçersiz.");
-
-            var existingTopic = _completedTopicService.GetById(dto.Id);
-            if (existingTopic == null)
-            {
-                return NotFound("Konu bulunamadı.");
-            }
+                return BadRequest("Geçersiz veri.");
 
             _completedTopicService.Update(dto);
-            return Ok("Tamamlanmış konu güncellendi.");
+            return Ok("Tamamlanan konu güncellendi.");
         }
 
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(int id)
         {
-            var existingTopic = _completedTopicService.GetById(id);
-            if (existingTopic == null)
-            {
+            var result = _completedTopicService.GetById(id);
+            if (result == null)
                 return NotFound("Konu bulunamadı.");
-            }
 
             _completedTopicService.Delete(id);
-            return Ok("Tamamlanmış konu silindi.");
+            return Ok("Tamamlanan konu silindi.");
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var result = _completedTopicService.GetById(id);
+            if (result == null)
+                return NotFound("Konu bulunamadı.");
+            return Ok(result);
+        }
+
+        [HttpGet("getall")]
+        public IActionResult GetAll()
+        {
+            var result = _completedTopicService.GetAll();
+            return Ok(result);
         }
 
         [HttpGet("getbyuser/{userId}")]
         public IActionResult GetByUserId(int userId)
         {
             var result = _completedTopicService.GetByUserId(userId);
+            return Ok(result);
+        }
+
+        [HttpGet("getbyuserandtopic")]
+        public IActionResult GetByUserIdAndTopicId([FromQuery] int userId, [FromQuery] int topicId)
+        {
+            var result = _completedTopicService.GetByUserIdAndTopicId(userId, topicId);
+            if (result == null)
+                return NotFound("Belirtilen kullanıcı ve konuya ait tamamlanan konu bulunamadı.");
             return Ok(result);
         }
     }
