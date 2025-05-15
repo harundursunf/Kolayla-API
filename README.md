@@ -96,4 +96,10 @@ Derslerini takip et, planını aksatma — StudyFlowApi ile veriler güvende! �
 Geliştirici: [@harundursunf](https://github.com/harundursunf)
 
 ---
+![image](https://github.com/user-attachments/assets/a6be732d-6761-4cc9-9a88-106f397d7ee8)
+![image](https://github.com/user-attachments/assets/8a01decc-421e-4025-8ae7-43d7c69cba25)
+![image](https://github.com/user-attachments/assets/3d64693d-f962-4df2-ba7d-ce0dbbc54bf4)
+
+
+
 
